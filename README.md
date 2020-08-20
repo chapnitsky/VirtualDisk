@@ -1,2 +1,0 @@
-# VirtualDisk
-Just like UNIX
