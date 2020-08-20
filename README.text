@@ -1,0 +1,46 @@
+Name: Doron Chapnitsky, ID: 316231190
+
+The program is basically working on Disk Memory sorting, the class fsDisk is like a well organised virtual disk..
+It uses the classes:
+
+fsInode- instance of a file- saves an array of direct blocks, index of indirect block, file size,
+total blocks, block size, a few functions of getters and setters, 
+a constructor and a destructor that frees the array of direct blocks.
+
+FileDescriptor- holding the file with its name and knows if it is in use or not.
+boolean inUse, a pair that holds the file name and its fsInode and some getters and setters.
+
+it has a map that is called MainDir that saves all of the so called "files",
+it has a vector that is called openFD that saves the FileDescriptor for each file,
+and lastly it has an array that is called BitVector that saves the available blocks in the disk.
+sim_disk_fd is a pointer of FILE that is used to open the file of the virtual disk,
+is_formated is a boolean value that tells us if the disk if formated or not,
+direct_enteris is the number of direct blocks in each file, and also block size of each file,
+disk_fd is the fileno of sim_disk_fd.
+
+The constructor opens DISK_SIM_FILE with reading and writing permissions and putting nulls all over the virtual disk,
+the destructor just freeing the BitVector array and closing the DISK_SIM_FILE.
+Also, it has 5 private functions: checking if there is enough blocks in the disk to write,
+freeing blocks in the disk, 
+searching for a free block in the disk,
+checking for the last direct block if needed to be filled and also for a version of last indirect block.
+
+The 8 public functions are: 
+listAll- printing all of the disk data without the junk data. 
+fsFormat- creating the BitVector and setting the block size and number of direct blocks.
+CreateFile- creating a new file by making a fsInode and inserting it with its name to MainDir and openFD.
+OpenFile- finding the file in the openFD and changing its FileDescriptor to be in use.
+CloseFile- finding the file in the openFD and changing its FileDescriptor to be not in use.
+DelFile- finding the file and deleting its fsInode from the MainDir and changing its name in the openFD to null.
+
+WriteToFile- writing the requested chars to the existing file, 
+first inserted to the direct blocks and smartly decides if there is a need to write in Indirect blocks and suses if needed.
+
+ReadFromFile- reading the requested chars from the existing file, 
+first reading from the direct blocks and smartly decides if there is a need to read from Indirect blocks and uses if needed.
+
+The main() requests a number from the user (0 - 8) and decides which function to activate.
+In the end we will free the allocated memory, happens when the user enters the number 0.
+
+How to compile: Terminal -> Run Build Task -> Build -> Continue
+How to run: F5 or type in Terminal: ./main
